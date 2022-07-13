@@ -3,6 +3,8 @@ package com.chainsys.bestPractices.stream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -79,4 +81,84 @@ public class StreamLessons {
 		System.out.println(intstream.findFirst().get());
 	}
 
+	public static void demoG() {
+		Stream<Integer> streamOne = Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+		streamOne.forEach(p -> System.out.println(p));
+		Stream<Integer> streamTwo = Stream.of(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+		streamTwo.forEach(p -> System.out.println(p));
+	}
+
+	public static void demoH() {
+		Stream<Integer> randomNumbers = Stream.generate(() -> (new Random()).nextInt(100));
+
+		randomNumbers.limit(5).forEach(System.out::println);
+	}
+
+	public static void demoI() {
+		List<String> memberNames = new ArrayList<>();
+		memberNames.add("Amitabh");
+		memberNames.add("Vijay");
+		memberNames.add("VijaySethupathy");
+		memberNames.add("Arjun");
+		memberNames.add("Rajini");
+		memberNames.add("Ajith");
+		memberNames.add("Suriya");
+		memberNames.add("Anjali");
+		memberNames.add("Kamal");
+		memberNames.stream().filter((s) -> s.startsWith("A")).forEach(System.out::println);
+		// filter() returns a stream -Intermediate operations
+		memberNames.stream().filter((s) -> s.startsWith("V")).map(String::toUpperCase).forEach(System.out::println);
+		// The map() intermediate operation converts each element
+		// in the stream into another object via the given function.
+		memberNames.stream().sorted().map(String::toUpperCase).forEach(System.out::println);
+	}
+
+	public static void demoJ() {
+		List<String> memberNames = new ArrayList<>();
+		memberNames.add("Amitabh");
+		memberNames.add("Vijay");
+		memberNames.add("Arjun");
+		memberNames.add("Rajini");
+		memberNames.add("Ajith");
+		memberNames.add("Suriya");
+		memberNames.add("Anjali");
+		memberNames.add("Kamal");
+		memberNames.add("Vimal");
+		memberNames.add("Vinay");
+		memberNames.add("Vignesh");
+		memberNames.add("Kamal");
+		memberNames.add("Malar");
+		memberNames.add("Sowmiya");
+		// Terminal operations return a result of a certain type after processing all
+		// the stream elements.
+		List<String> memNamesInUppercase = memberNames.stream().sorted().map(String::toUpperCase)
+				.collect(Collectors.toList());
+		// System.out.print(memNamesInUppercase);
+		boolean matchedResult = memberNames.stream().anyMatch((s) -> s.startsWith("A"));
+
+		System.out.println(matchedResult); // true
+
+		matchedResult = memberNames.stream().allMatch((s) -> s.startsWith("A"));
+
+		System.out.println(matchedResult); // false
+
+		matchedResult = memberNames.stream().noneMatch((s) -> s.startsWith("E"));
+
+		System.out.println(matchedResult); // true
+		long totalMatched = memberNames.stream().filter((s) -> s.startsWith("A")).count();
+
+		System.out.println(totalMatched);
+		Optional<String> reduced = memberNames.stream().reduce((s1, s2) -> s1 + "," + s2);
+
+		reduced.ifPresent(System.out::println);
+	}
+
+	public static void demoK() {
+		List<Integer> list = new ArrayList<Integer>();
+		for (int i = 1; i < 100; i++) {
+			list.add(i);
+		}
+		System.out.println(list.parallelStream().findFirst().get());
+		System.out.println(list.parallelStream().findAny().get());
+	}
 }
