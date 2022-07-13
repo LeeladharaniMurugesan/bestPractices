@@ -5,7 +5,7 @@ public class ScoreBoard {
 	private ScoreBoard() {
 		System.out.println("Object is created for ScoreBoard");
 	}
-	public static ScoreBoard createObject() {
+	public static ScoreBoard createObject() { // creating object for ScoreBoard
 		return new ScoreBoard();
 	}
 }

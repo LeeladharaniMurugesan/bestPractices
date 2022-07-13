@@ -18,15 +18,15 @@ public class Car {
 	    wheels[3]=new SteelWheel();
 	    wheels[3].location="back right";
 	}
-	public Car(PetrolEngine engine,SteelWheel[] wheel)
-	{
-		this.engine=engine; 
-		this.wheels=wheel;
-		wheels[0].location="front left";
-		wheels[1].location="front right";
-	    wheels[2].location="back left";
-	    wheels[3].location="back right";
-	}
+//	public Car(PetrolEngine engine,SteelWheel[] wheel)
+//	{
+//		this.engine=engine; 
+//		this.wheels=wheel;
+//		wheels[0].location="front left";
+//		wheels[1].location="front right";
+//	    wheels[2].location="back left";
+//	    wheels[3].location="back right";
+//	}
    public void startCar() {
 	   engine.start();
 	   wheels[0].rotate();
