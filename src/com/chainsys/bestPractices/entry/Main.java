@@ -1,12 +1,12 @@
 package com.chainsys.bestPractices.entry;
 
-import com.chainsys.bestPractices.stream.StreamLessons;
+import com.chainsys.bestPractices.references.Lessons;
+
 
 public class Main {
 
 	public static void main(String[] args) {
-	StreamLessons.demoK();	
-
+		Lessons.testD();
 	}
 
 }

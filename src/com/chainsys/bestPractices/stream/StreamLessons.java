@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.DoubleStream;
 import java.util.stream.BaseStream;
+import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 // Stream is a sequence of elements computed on demand
@@ -160,5 +161,105 @@ public class StreamLessons {
 		}
 		System.out.println(list.parallelStream().findFirst().get());
 		System.out.println(list.parallelStream().findAny().get());
+	}
+
+	public static void demoL() { // skip()
+		Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).skip(2).forEach(i -> System.out.print(i + " "));
+	}
+
+	public static void demoM() { // distinct()
+		List<Integer> memberNames = new ArrayList<Integer>();
+		memberNames.add(1);
+		memberNames.add(1);
+		memberNames.add(2);
+		memberNames.add(3);
+		memberNames.add(3);
+		memberNames.add(4);
+		memberNames.add(5);
+		memberNames.add(8);
+		memberNames.add(8);
+		memberNames.stream().distinct().forEach(System.out::println);
+	}
+
+	public static void demoM1() { // distinct()
+		List<Integer> list = Arrays.asList(2, 2, 4, 6, 8, 8, 10);
+		list.stream().distinct().forEach(System.out::println);
+
+	}
+
+	public static void demoM2() { // distinct()
+		List<Integer> list = Arrays.asList(2, 2, 4, 6, 8, 8, 10);
+		List<Integer> l1 = list.stream().distinct().collect(Collectors.toList());
+		System.out.println(l1);
+	}
+
+	public static void demoN() { // Peek()
+		List<Integer> list = Arrays.asList(2, 4, 6, 8, 10);
+		// list.stream().peek(System.out::println).collect(Collectors.toList());
+		// peek() is an intermediate operation and we didn't apply a terminal operation
+		// to the pipeline.
+		list.stream().forEach(System.out::println);
+	}
+
+	public static void demoO() { // peek()
+//		Stream.of("one", "two", "three", "four")
+//		  .peek(e -> System.out.println("value: "+ e))
+//		  .collect(Collectors.toList());
+		Stream.of("one", "two", "three", "four").peek(System.out::println) // method reference
+				.collect(Collectors.toList());
+
+	}
+
+	public static void demoO1() {
+		// Stream.of("one", "two", "three", "four").peek (e -> e.toUpperCase()) //
+		// peek() doesn't manipulate the element .forEach(System.out::println);
+		Stream.of("one", "two", "three", "four").map(e -> e.toUpperCase()).forEach(System.out::println);// map() well
+																										// manipulate
+																										// the element
+		// peek() can be useful in altering the inner state of an element
+		// without replacing the element
+	}
+
+	public static void demoP() { // Peek()
+		Stream.of("one", "two", "three", "four").peek(e -> e.toUpperCase()) // peek () does not manipulate the element
+				.forEach(System.out::println);
+	}
+
+	public static void demoR() {
+//		Stream<Emp> empStream = Stream.of(new Emp(100, "Alice"), new Emp(101, "Bob"), new Emp(102, "Chuck"));
+//		empStream.peek(e -> e.setName(e.getId()+" "+e.getName().toUpperCase())).forEach(System.out::println);
+		Stream<Emp> empStream = Stream.of(new Emp(100, "Alice"), new Emp(101, "Bob"), new Emp(102, "Chuck"));
+		empStream.peek(e -> e.toString()).forEach(e -> System.out.println(e.getId()));
+	}
+
+}
+
+class Emp {
+	private int id;
+	private String name;
+
+	public Emp(int id, String name) {
+		this.setId(id);
+		this.setName(name);
+	}
+
+	public String toString() {
+		return getName();
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }
